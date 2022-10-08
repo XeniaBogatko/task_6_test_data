@@ -7,9 +7,12 @@ import org.junit.jupiter.api.Test;
 
 public class FormTest {
     FormPage formPage = new FormPage();
+    TestData testData = new TestData();
+
     @BeforeAll
     static void setUp() {
         Configuration.baseUrl = "https://demoqa.com";
+        Configuration.browserSize = "1024x768";
         Configuration.holdBrowserOpen = true;
     }
 
@@ -17,30 +20,30 @@ public class FormTest {
     void firstTest() {
 
         formPage.openPage()
-                .setFirstName("xenia")
-                .setLastName("BOGATKO")
-                .setEmail("BOGATKO@a.com")
-                .setGender("Other")
-                .setUserNumber("1234567890")
-                .setBirthDate("13", "July", "1990")
-                .setSubjects("English")
-                .setHobbies("Music")
-                .setHobbies("Reading").uploadPicture("1660769245797.jpeg")
-                .setAddress("st.Address 123/2")
-                .setState("Haryana")
-                .setCity("Karnal")
+                .setFirstName(testData.firstName)
+                .setLastName(testData.lastName)
+                .setEmail(testData.email)
+                .setGender(testData.gender)
+                .setUserNumber(testData.mobile)
+                .setBirthDate(testData.day, testData.month, testData.year)
+                .setSubjects(testData.subject)
+                .setHobbies(testData.hobby)
+                .uploadPicture(testData.picture)
+                .setAddress(testData.address)
+                .setState(testData.state)
+                .setCity(testData.city)
                 .submit();
 
         formPage.checkResultTableVisible()
-                .checkResult("Student Name", "xenia BOGATKO")
-                .checkResult("Student Email", "BOGATKO@a.com")
-                .checkResult("Gender", "Other")
-                .checkResult("Mobile", "1234567890")
-                .checkResult("Date of Birth", "13 July,1990")
-                .checkResult("Subjects", "English")
-                .checkResult("Hobbies", "Music, Reading")
-                .checkResult("Picture", "1660769245797.jpeg")
-                .checkResult("Address", "st.Address 123/2")
-                .checkResult("State and City", "Haryana Karnal");
+                .checkResult("Student Name", testData.firstName + " " + testData.lastName)
+                .checkResult("Student Email", testData.email)
+                .checkResult("Gender", testData.gender)
+                .checkResult("Mobile", testData.mobile)
+                .checkResult("Date of Birth", testData.day + " " + testData.month + "," + testData.year)
+                .checkResult("Subjects", testData.subject)
+                .checkResult("Hobbies", testData.hobby)
+                .checkResult("Picture", testData.picture)
+                .checkResult("Address", testData.address)
+                .checkResult("State and City", testData.state + " " + testData.city);
     }
 }
